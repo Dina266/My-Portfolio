@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let navbar = document.querySelector('.navbar');  // Target the navbar
     let sections = document.querySelectorAll('section');  // All sections
     let navLinks = document.querySelectorAll('header nav a');  // All nav links
+    let contactForm = document.querySelector('form');  // Target the contact form
 
     // Toggle the menu and icon
     menuIcon.onclick = (e) => {
@@ -35,4 +36,28 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     };
+
+    // Handle form submission
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();  // Prevent default form submission
+
+            let formData = new FormData(contactForm);  // Create FormData object
+
+            fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                // Handle success or error response
+                alert(result);  // Show the result in an alert (or you can use other methods to display messages)
+                contactForm.reset();  // Reset the form fields
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error sending your message.');
+            });
+        });
+    }
 });
