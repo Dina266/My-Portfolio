@@ -48,7 +48,8 @@ form.onsubmit = (e)=>{
     form.classList.add("disabled");
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "message.php", true);
+    xhr.open("POST", "send_email.php", true);
+
     xhr.onload = ()=>{
         if(xhr.readyState == 4 && xhr.status == 200){
         let response = xhr.response;
