@@ -43,17 +43,14 @@ const form = document.querySelector("form");
 
 form.onsubmit = (e) => {
     e.preventDefault();
-    // statusTxt.style.color = "#0D6EFD";
-    // statusTxt.style.display = "block";
-    // statusTxt.innerText = "Sending your message...";
     form.classList.add("disabled");
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "send_email.php", true);
-
     xhr.onload = () => {
+        console.log("Response received:", xhr.responseText); // Log the response
         if (xhr.readyState == 4 && xhr.status == 200) {
-            let response = xhr.responseText;  // Use responseText for text responses
+            let response = xhr.responseText;
             if (response.indexOf("required") != -1 || response.indexOf("valid") != -1 || response.indexOf("failed") != -1) {
                 // statusTxt.style.color = "red";
             } else {
@@ -66,9 +63,12 @@ form.onsubmit = (e) => {
             form.classList.remove("disabled");
         }
     };
+    xhr.onerror = () => {
+        console.error("Request failed:", xhr.statusText); // Log errors
+    };
 
     let formData = new FormData(form);
     xhr.send(formData);
-}
+};
 
 });
