@@ -657,9 +657,3 @@
             grid-template-columns: repeat(1,1fr);
         }
     }
-
-
-.button-area span{
-  margin: 20px 0 0;
-  text-align: center;
-}
