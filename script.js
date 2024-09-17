@@ -49,9 +49,11 @@ form.onsubmit = (e)=>{
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "send_email.php", true);
+    
 
     xhr.onload = ()=>{
         if(xhr.readyState == 4 && xhr.status == 200){
+            print("inside status 200");
         let response = xhr.response;
         if(response.indexOf("required") != -1 || response.indexOf("valid") != -1 || response.indexOf("failed") != -1){
             statusTxt.style.color = "red";
