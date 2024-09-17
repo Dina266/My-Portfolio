@@ -1,11 +1,17 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize form data
-    $name = htmlspecialchars($_POST['name']);
-    $email = htmlspecialchars($_POST['email']);
-    $phone = htmlspecialchars($_POST['phone']);
-    $subject = htmlspecialchars($_POST['subject']);
-    $message = htmlspecialchars($_POST['message']);
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $phone = htmlspecialchars(trim($_POST['phone']));
+    $subject = htmlspecialchars(trim($_POST['subject']));
+    $message = htmlspecialchars(trim($_POST['message']));
+
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format.";
+        exit;
+    }
 
     // Email recipient and subject
     $to = "denaa2366@gmail.com"; // Replace with your email address
@@ -13,9 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Email body
     $email_body = "You have received a new message from the user $name.\n\n" .
-                    "Email: $email\n" .
-                    "Phone: $phone\n\n" .
-                    "Message:\n$message";
+                  "Email: $email\n" .
+                  "Phone: $phone\n\n" .
+                  "Message:\n$message";
 
     // Email headers
     $headers = "From: $email\r\n";
